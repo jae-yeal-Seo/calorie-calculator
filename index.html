@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="일일 권장 칼로리를 계산해보세요. 나이, 성별, 활동량에 따른 맞춤형 칼로리 계산기로 건강한 식단 관리를 시작하세요.">
+    <meta name="keywords" content="권장 칼로리, 칼로리 계산기, 일일 칼로리, 기초대사량, 다이어트, 체중관리, 건강한 식단">
+    <meta name="author" content="Calorie Calculator">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="권장 칼로리 계산기 - 나에게 맞는 일일 칼로리 계산하기">
+    <meta property="og:description" content="나이, 성별, 활동량에 따른 맞춤형 칼로리 계산기로 건강한 식단 관리를 시작하세요.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ko_KR">
+    <link rel="canonical" href="https://your-domain.com/calorie-calculator">
+    <title>권장 칼로리 계산기 - 나에게 맞는 일일 칼로리 계산하기</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        input[type="number"],
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        input[type="number"]:focus,
+        input[type="text"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23464646' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            padding-right: 40px;
+        }
+
+        input::placeholder {
+            color: #9e9e9e;
+        }
+    </style>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .calculator {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f5e9;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "권장 칼로리 계산기",
+            "description": "나이, 성별, 활동량에 따른 맞춤형 칼로리 계산기",
+            "applicationCategory": "HealthApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "KRW"
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>권장 칼로리 계산기</h1>
+
+        <article>
+            <h2>일일 권장 칼로리란?</h2>
+            <p>일일 권장 칼로리는 개인의 건강을 유지하고 적정 체중을 달성하기 위해 하루 동안 섭취해야 하는 적정 열량을 의미합니다.
+                이는 나이, 성별, 신장, 체중, 활동량 등 다양한 요소를 고려하여 계산됩니다.</p>
+
+            <p>정확한 권장 칼로리를 알면 다음과 같은 이점이 있습니다:</p>
+            <ul>
+                <li>효과적인 체중 관리</li>
+                <li>균형 잡힌 영양 섭취</li>
+                <li>건강한 생활습관 형성</li>
+                <li>에너지 수준 최적화</li>
+            </ul>
+        </article>
+
+        <div class="calculator">
+            <h2>나의 권장 칼로리 계산하기</h2>
+            <form id="calorieForm">
+                <div class="form-group">
+                    <label for="gender">성별:</label>
+                    <select id="gender" required>
+                        <option value="male">남성</option>
+                        <option value="female">여성</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="age">나이 (세):</label>
+                    <input type="number" id="age" required min="1" max="120">
+                </div>
+
+                <div class="form-group">
+                    <label for="height">신장 (cm):</label>
+                    <input type="number" id="height" required min="100" max="250">
+                </div>
+
+                <div class="form-group">
+                    <label for="weight">체중 (kg):</label>
+                    <input type="number" id="weight" required min="30" max="200">
+                </div>
+
+                <div class="form-group">
+                    <label for="activity">활동량:</label>
+                    <select id="activity" required>
+                        <option value="1.2">거의 운동하지 않음</option>
+                        <option value="1.375">가벼운 운동 (주 1-3회)</option>
+                        <option value="1.55">보통 수준 (주 3-5회)</option>
+                        <option value="1.725">활발한 운동 (주 6-7회)</option>
+                        <option value="1.9">매우 활발한 운동 (하루 2회)</option>
+                    </select>
+                </div>
+
+                <button type="submit">계산하기</button>
+            </form>
+
+            <div id="result"></div>
+        </div>
+
+        <div class="food-calories">
+            <h2>주요 음식 칼로리 정보</h2>
+            <div class="food-category">
+                <h3>주식류</h3>
+                <ul>
+                    <li>밥 1공기 (210g): 300kcal</li>
+                    <li>라면 1개: 500kcal</li>
+                    <li>김밥 1줄: 350kcal</li>
+                    <li>떡볶이 1인분: 400kcal</li>
+                </ul>
+            </div>
+
+            <div class="food-category">
+                <h3>고기/해산물</h3>
+                <ul>
+                    <li>삼겹살 100g: 330kcal</li>
+                    <li>닭가슴살 100g: 165kcal</li>
+                    <li>연어 100g: 208kcal</li>
+                    <li>새우 100g: 99kcal</li>
+                </ul>
+            </div>
+
+            <div class="food-category">
+                <h3>간식/음료</h3>
+                <ul>
+                    <li>아이스크림 1개: 200kcal</li>
+                    <li>초콜릿 1개: 50kcal</li>
+                    <li>커피 라떼 1잔: 150kcal</li>
+                    <li>콜라 1캔: 140kcal</li>
+                </ul>
+            </div>
+
+            <div class="food-category">
+                <h3>과일</h3>
+                <ul>
+                    <li>사과 1개: 80kcal</li>
+                    <li>바나나 1개: 100kcal</li>
+                    <li>오렌지 1개: 60kcal</li>
+                    <li>포도 100g: 70kcal</li>
+                </ul>
+            </div>
+        </div>
+
+        <style>
+            .food-calories {
+                background: #f5f5f5;
+                padding: 20px;
+                border-radius: 10px;
+                margin: 20px 0;
+            }
+
+            .food-category {
+                background: white;
+                padding: 15px;
+                margin: 15px 0;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .food-category h3 {
+                color: #2e7d32;
+                margin-top: 0;
+                margin-bottom: 10px;
+            }
+
+            .food-category ul {
+                padding-left: 20px;
+                margin: 0;
+            }
+
+            .food-category li {
+                margin-bottom: 8px;
+                line-height: 1.4;
+            }
+        </style>
+
+        <article>
+            <h2>권장 칼로리 계산기 활용 방법</h2>
+            <p>위 계산기를 통해 산출된 칼로리는 참고용이며, 개인의 건강 상태나 특수한 상황에 따라 조정이 필요할 수 있습니다.
+                정확한 칼로리 섭취량은 전문가와 상담 후 결정하시기 바랍니다.</p>
+        </article>
+    </div>
+
+    <script>
+        document.getElementById('calorieForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const gender = document.getElementById('gender').value;
+            const age = parseFloat(document.getElementById('age').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const activity = parseFloat(document.getElementById('activity').value);
+
+            let bmr;
+            if (gender === 'male') {
+                bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+            } else {
+                bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+            }
+
+            const dailyCalories = Math.round(bmr * activity);
+
+            const result = document.getElementById('result');
+            result.style.display = 'block';
+
+            result.innerHTML = `
+                <h3>계산 결과</h3>
+                <p>당신의 기초대사량(BMR): ${Math.round(bmr)} kcal</p>
+                <p>일일 권장 칼로리: ${dailyCalories} kcal</p>
+                <p>체중 감량을 위해서는 하루 ${dailyCalories - 500} kcal 정도를 섭취하시면 됩니다.</p>
+
+                <p>체중 증가를 위해서는 하루 ${dailyCalories + 500} kcal 정도를 섭취하시면 됩니다.</p>
+
+            `;
+        });
+    </script>
+</body>
+
+</html>
